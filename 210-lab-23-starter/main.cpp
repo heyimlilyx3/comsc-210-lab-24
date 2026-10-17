@@ -1,18 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <list>
+#include <set>
 #include <limits>
 #include "Goat.h"
 using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
-int select_goat(list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(list<Goat> trip);
-void list_goats(list<Goat> trip);
+int select_goat(set<Goat> trip);
+void delete_goat(set<Goat> &trip);
+void add_goat(set<Goat> &trip, string [], string []);
+void display_trip(set<Goat> trip);
+void list_goats(set<Goat> trip);
 int main_menu();
 
 int main() {
@@ -32,7 +32,7 @@ int main() {
     fin1.close();
 
     bool end = false;
-    list<Goat> trip;
+    set<Goat> trip;
     while(!end) {
         int choice = main_menu();
         switch(choice) {
@@ -78,15 +78,15 @@ int main_menu() {
     return choice;
 }
 
-void add_goat(list<Goat> &trip, string names[], string colors[]) {
+void add_goat(set<Goat> &trip, string names[], string colors[]) {
     string name = names[rand() % SZ_NAMES];
     int age = rand() % (MAX_AGE + 1);
     string color = colors[rand() % SZ_COLORS];
-    trip.push_back(Goat(name, age, color));
+    trip.insert(Goat(name, age, color));
     // cout << "Added a goat: " << name << ", Age: " << age << ", Color: " << color << endl;
 }
 
-void list_goats(list<Goat> trip) {
+void list_goats(set<Goat> trip) {
     if(trip.empty()) {
         cout << "No goats in the trip." << endl;
         return;
@@ -97,7 +97,7 @@ void list_goats(list<Goat> trip) {
     }
 }
 
-int select_goat(list<Goat> trip) {
+int select_goat(set<Goat> trip) {
     if(trip.empty()) {
         cout << "No goats to select." << endl;
         return -1;
@@ -109,7 +109,7 @@ int select_goat(list<Goat> trip) {
     return choice;
 }
 
-void delete_goat(list<Goat> &trip) {
+void delete_goat(set<Goat> &trip) {
     if(trip.empty()) {
         cout << "No goats to delete." << endl;
         return;
@@ -119,8 +119,6 @@ void delete_goat(list<Goat> &trip) {
         cout << "Invalid choice. Please try again." << endl;
         return;
     }
-    auto it = trip.begin();
-    advance(it, choice - 1);
-    trip.erase(it);
+    trip.erase(next(trip.begin(), choice - 1));
     cout << "Deleted goat #" << choice << "." << endl;
 } //

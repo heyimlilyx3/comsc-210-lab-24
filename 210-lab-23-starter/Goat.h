@@ -3,6 +3,8 @@
 #ifndef GOAT_H
 #define GOAT_H
 #include <iostream>
+#include <tuple>
+
 using namespace std;
 
 class Goat {
@@ -24,7 +26,9 @@ public:
     void set_color(string c)        { color = c; }
     string get_color() const        { return color; }
 
-    // write overloaded < operator for the std::list
+    bool operator<(const Goat &other) const {
+        return tie(name, age, color) < tie(other.name, other.age, other.color);
+    }
 };
 
 #endif
