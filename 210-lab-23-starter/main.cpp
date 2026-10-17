@@ -123,4 +123,4 @@ void delete_goat(list<Goat> &trip) {
     advance(it, choice - 1);
     trip.erase(it);
     cout << "Deleted goat #" << choice << "." << endl;
-}
+} //
